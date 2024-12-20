@@ -1,0 +1,43 @@
+<form autocomplete="off" [formGroup]="permissionsForm" (ngSubmit)="save()">
+	<app-modal-content #modal [title]="title">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="form-group mb-2">
+					<label for="txtName" class="form-label">Nombre (<span class="text-danger">*</span>):</label>
+					<input type="text" class="form-control" [class.is-invalid]="validateField('name')" id="txtName" placeholder="Ingrese nombre para el nuevo permiso" formControlName="name" required appInputFocus/>
+					@if (validateField('name')) {
+					<span class="form-text text-danger">
+						Campo obligatorio
+					</span>
+					}
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="form-group mb-2">
+					<label for="txtName" class="form-label">Grupo (<span class="text-danger">*</span>):</label>
+					<p-dropdown formControlName="group" [options]="catPermissionGroup" optionLabel="name" placeholder="Selecciona un grupo" [style]="{'width': '100%'}" appendTo="body"></p-dropdown>
+					@if (validateField('groupId')) {
+					<span class="form-text text-danger">
+						Campo obligatorio
+					</span>
+					}
+				</div>
+			</div>
+		</div>
+
+		<!-- FOOTER -->
+		<div footer class="w-100 d-flex justify-content-between">
+			<button type="button" class="btn btn-sm btn-white" (click)="modal.close()" tabindex="-1">
+				<i class="fa fa-times"></i>
+				Cerrar
+			</button>
+			<button type="submit" [ngClass]="!isUpdate ? 'btn-success' : 'btn-warning'" class="btn btn-success btn-sm">
+				<i [ngClass]="!isUpdate ? 'fa-check' : 'fa-edit'" class="fa"></i>
+				{{ !isUpdate ? "Guardar" : "Editar" }}
+			</button>
+		</div>
+	</app-modal-content>
+</form>

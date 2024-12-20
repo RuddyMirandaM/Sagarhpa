@@ -1,0 +1,50 @@
+<app-page-content pageTitle="Permisos de Usuario" subtitle="Gestiona los permisos de acceso a las diferentes opciones del sistema">
+	<section class="py-4">
+		<div class="row">
+			<div class="col-12">
+				@if (selectedItem?.isActive) {
+				<button type="button" [disabled]="!selectedItem" class="btn btn-danger btn-sm me-1" title="Desactivar Permiso" (click)="toggleActive(false)">
+					<i class="mdi mdi-lock"></i> Desactivar
+				</button>
+				}
+
+				@if (!selectedItem?.isActive) {
+				<button type="button" [disabled]="!selectedItem" class="btn btn-success btn-sm me-1" title="Activar Permiso" (click)="toggleActive(true)">
+					<i class="mdi mdi-lock-open"></i> Activar
+				</button>
+				}
+				<button title="Editar Permiso" [disabled]="!selectedItem" type="button" class="btn btn-warning btn-sm me-1" (click)="openForm()">
+					<i class="mdi mdi-file-document-edit"></i> Editar
+				</button>
+			</div>
+		</div>
+	</section>
+	<p-table [value]="gridData.data" [lazy]="true" (onLazyLoad)="dataStateChange($event)" [(selection)]="selectedItem" dataKey="key" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" [paginator]="true" [rows]="state.take" styleClass="p-datatable-gridlines p-datatable-striped" [rowHover]="true" [totalRecords]="gridData.total" selectionMode="single">
+		<ng-template pTemplate="header">
+			<tr>
+				<th style="width: 1rem"></th>
+				<th>Nombre</th>
+				<th>Grupo</th>
+				<th>Fecha de creacion</th>
+				<th>Estatus</th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-row>
+			<tr [pSelectableRow]="row">
+				<td>
+					<p-tableRadioButton [value]="row"></p-tableRadioButton>
+				</td>
+				<td>{{ row.name }}</td>
+				<td>{{row.group && row.group.name}}</td>
+				<td>
+					<span class="text-capitalize">
+						{{row.createdAt | date}}
+					</span>
+				</td>
+				<td>
+					<span class="badge" [ngClass]="row.isActive ? 'bg-success' : 'bg-danger'" title="Estatus">{{ row.isActive ? "Activo" : "Inactivo" }}</span>
+				</td>
+			</tr>
+		</ng-template>
+	</p-table>
+</app-page-content>

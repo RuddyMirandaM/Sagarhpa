@@ -1,0 +1,135 @@
+<section class="bg-light app-filters">
+  <div class="row row-cols-auto g-3 align-items-center">
+    <app-input class="col-1" label="No. Titulo">
+      <input type="text" 
+             class="form-control" 
+             [ngModel]="state2.titulo_num"
+             (ngModelChange)="state2.titulo_num = $event; getList()"
+             maxlength="5">
+    </app-input>
+    
+
+    <div class="col-2">
+      <label>Tipo de Título</label>
+      <app-select 
+        [items]="tipoOptions" 
+        [(value)]="selectedItem" 
+        (valueChange)="getList()"
+        keyField="id"
+        placeholder="Seleccione tipo"
+        descriptionField="name">
+      </app-select>
+    </div>
+
+    <app-input label="Propietario" class="col-12 col-sm-2">
+      <input type="text" 
+             class="form-control" 
+             [(ngModel)]="state2.expedidoa2"
+             (ngModelChange)="onPropietarioChange($event)"
+             placeholder="Buscar por propietario"
+             [maxlength]="100"
+             autocomplete="off">
+    </app-input>
+
+    <div class="col-2">
+      <label>Municipio</label>
+      <app-select 
+      [items]="municipioOptions" 
+      [(value)]="selectedMunicipio" 
+      keyField="id"
+      placeholder="Seleccione municipio"
+      descriptionField="name"
+      color="primary"
+      (valueChange)="onMunicipioChange()"
+      class="text-black">
+    </app-select>
+
+    </div>
+
+    <div class="col-2">
+      <label>Zona</label>
+      <app-select 
+        [items]="zonaOptions" 
+        [(value)]="selectedZona" 
+        keyField="id"
+        placeholder="Seleccione zona"
+        descriptionField="name"
+        (valueChange)="onZonaChange()">
+      </app-select>
+    </div>
+    
+    <div class="col-2">
+      <label>AGL</label>
+      <app-select 
+        [items]="aglOptions" 
+        [(value)]="selectedAGL" 
+        keyField="id"
+        placeholder="Seleccione AGL"
+        descriptionField="name"
+        (valueChange)="onAGLChange()">
+      </app-select>
+    </div>
+
+    <div class="col-12 col-sm-6 text-end pt-4">
+      <button class="btn btn-sm btn btn-primary" >Reestablecer</button>
+      <button class="btn btn-sm btn-default me-1">Ver detalle</button>
+      <button class="btn btn-sm btn-info">Filtrar</button>
+      <button class="btn btn-sm btn-warning">Editar</button>
+      <button class="btn btn-sm btn-danger">Cancelar</button>
+      <button class="btn btn-sm btn-success">Revalidar</button>
+    </div>
+  </div>
+</section>
+
+<app-page-content>
+
+  <p-table 
+  [value]="gridData2.data" 
+  [lazy]="true" 
+  (onLazyLoad)="dataStateChange($event)" 
+  [(selection)]="selectedItem" 
+  [showCurrentPageReport]="true" 
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" 
+  [paginator]="true" 
+  [rows]="state2.take" 
+  styleClass="p-datatable-gridlines p-datatable-striped" 
+  [rowHover]="true" 
+  [totalRecords]="gridData2.total" 
+  selectionMode="single"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 1rem"></th>
+      <th>No. de Titulo</th>
+      <th>Tipo de Titulo</th>
+      <th>Propietario</th>
+      <th>Municipio</th>
+      <th>Asiento de producción</th>
+      <th>Fecha de expedición</th>
+      <th>Estatus</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-row>
+    <tr [pSelectableRow]="row">
+      <td>
+        <p-tableRadioButton [value]="row"></p-tableRadioButton>
+      </td>
+      <td>{{ row.titulo_num }}</td>
+      <td>
+        {{ row.tipo === 1 || row.tipo === '1' ? 'Ganado' : 
+            row.tipo === 2 || row.tipo === '2' ? 'Colmena' : row.tipo }}
+      </td>
+      <td>{{ row.expedidoa2 }}</td>
+      <td>{{ row.municipio }}</td>
+      <td>{{ row.asiento_produccion }}</td>
+      <td>{{ row.fecha_expedicion | date:'dd/MM/yyyy' }}</td>
+      <td>
+        <span >
+          {{ row.status }}
+        </span>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+</app-page-content>
+

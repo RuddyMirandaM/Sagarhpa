@@ -1,0 +1,48 @@
+{
+	"name": "angular-template",
+	"version": "0.0.0",
+	"scripts": {
+		"ng": "ng",
+		"start": "ng serve",
+		"build": "ng build -c development && npm run postbuild",
+		"build:qa": "ng build -c qa && npm run postbuild",
+		"build:prod": "ng build -c production && npm run postbuild",
+		"watch": "ng build --watch --configuration qa",
+		"test": "ng test",
+		"postbuild": "node postbuild.js"
+	},
+	"private": true,
+	"dependencies": {
+		"@angular/animations": "18.1.1",
+		"@angular/common": "18.1.1",
+		"@angular/compiler": "18.1.1",
+		"@angular/core": "18.1.1",
+		"@angular/forms": "18.1.1",
+		"@angular/localize": "18.1.1",
+		"@angular/platform-browser": "18.1.1",
+		"@angular/platform-browser-dynamic": "18.1.1",
+		"@angular/router": "18.1.1",
+		"@popperjs/core": "2.11.8",
+		"bootstrap": "5.3.2",
+		"jquery": "3.7.1",
+		"ngx-pipes": "3.2.2",
+		"primeng": "17.18.0",
+		"rxjs": "7.8.1",
+		"tslib": "2.6.2",
+		"zone.js": "0.14.2"
+	},
+	"devDependencies": {
+		"@angular-devkit/build-angular": "18.1.1",
+		"@angular/cli": "18.1.1",
+		"@angular/compiler-cli": "18.1.1",
+		"@types/jasmine": "5.1.4",
+		"jasmine-core": "5.1.1",
+		"karma": "6.4.2",
+		"karma-chrome-launcher": "3.2.0",
+		"karma-coverage": "2.2.1",
+		"karma-jasmine": "5.1.0",
+		"karma-jasmine-html-reporter": "2.1.0",
+		"purgecss": "5.0.0",
+		"typescript": "5.4.5"
+	}
+}

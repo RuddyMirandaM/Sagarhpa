@@ -1,0 +1,22 @@
+<form autocomplete="off" [formGroup]="groupsForm" (ngSubmit)="save()">
+	<app-modal-content #modal [title]="title">
+		<div class="m-1"></div>
+		<div>
+			<app-input class="mb-2" error="Se requiere el nombre" [valid]="!invalidField('name')">
+				<input type="text" class="form-control" placeholder="Ingrese nombre para el nuevo grupo de permisos" formControlName="name" required id="txtName" appInputFocus />
+			</app-input>
+		</div>
+
+		<!-- FOOTER -->
+		<div footer class="w-100 d-flex justify-content-between">
+			<button type="button" class="btn btn-sm btn-white" (click)="modal.close()" tabindex="-1">
+				<i class="fa fa-times"></i>
+				Cerrar
+			</button>
+			<button type="submit" [ngClass]="!isUpdate ? 'btn-success' : 'btn-warning'" class="btn btn-success btn-sm">
+				<i [ngClass]="!isUpdate ? 'fa-check' : 'fa-edit'" class="fa"></i>
+				{{ !isUpdate ? "Guardar" : "Editar" }}
+			</button>
+		</div>
+	</app-modal-content>
+</form>

@@ -1,0 +1,40 @@
+<app-page-content #modal [pageTitle]="title">
+	<form [formGroup]="form">
+		<div class="card-body row my-0 my-sm-5">
+			<app-input class="col-lg-4" label="Nombre">
+				<input type="text" class="form-control" formControlName="name" required>
+			</app-input>
+			<app-input class="col-lg-4" label="Primer Apellido">
+				<input type="text" class="form-control" formControlName="firstName" required>
+			</app-input>
+			<app-input class="col-lg-4" label="Segundo Apellido">
+				<input type="text" class="form-control" formControlName="secondName">
+			</app-input>
+			<app-input class="col-12" label="Puesto">
+				<input type="text" class="form-control" formControlName="job" required>
+			</app-input>
+			<app-input class="col-lg-4" label="Número de empleado">
+				<input type="text" class="form-control" formControlName="employeeNumber" required maxlength="10">
+			</app-input>
+			<app-input class="col-lg-4" label="Curp">
+				<input type="text" class="form-control" formControlName="curp" required maxlength="20" appInputUppercase>
+			</app-input>
+			<app-input class="col-lg-6" label="Correo Electrónico" error="Formato de correo incorrecto" [valid]="isValid('email')">
+				<input type="text" class="form-control" formControlName="email" required>
+			</app-input>
+			<app-input class="col-lg-6" label="Confirmar Correo Electrónico">
+				<input type="text" class="form-control" formControlName="confirmEmail" required>
+			</app-input>
+			<app-input class="col-lg-6" label="Rol del usuario">
+				@if (catRoles$ | async; as roles) {
+				<p-multiSelect [options]="roles.data" formControlName="roles" optionLabel="name" dataKey="id" placeholder="Selecciona los roles del usuario"></p-multiSelect>
+				}
+			</app-input>
+			<div class="col-12 mt-2">
+				<button type="button" [ngClass]="!isUpdate ? 'btn-success' : 'btn-warning'" class="btn ms-auto w-auto m-auto float-end" (click)="submitted = true; save()">
+					{{ !isUpdate ? "Registar" : "Editar" }}
+				</button>
+			</div>
+		</div>
+	</form>
+</app-page-content>

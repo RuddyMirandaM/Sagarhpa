@@ -1,0 +1,70 @@
+<app-page-content pageTitle="Usuarios">
+	<section class="bg-light app-filters">
+		<div class="row row-cols-auto g-3 align-items-center">
+			<app-input label="Nombre" class="col-12 col-sm-3">
+				<input type="text" class="form-control" [(ngModel)]="state.name" [class.ng-valid]="false">
+			</app-input>
+			<app-input label="Numero de empleado" class="col-12 col-sm-3">
+				<input type="text" class="form-control" [(ngModel)]="state.employeeNumber" [class.ng-valid]="false">
+			</app-input>
+			<div class="col-12 col-sm-6 text-end pt-4">
+				<button class="btn btn-sm btn-default me-1" (click)="clearFilters()">Reestablecer</button>
+				<button class="btn btn-sm btn-info" (click)="getList()">Filtrar</button>
+			</div>
+		</div>
+	</section>
+	<section class="py-4">
+		<div class="row">
+			<div class="col-sm-8">
+				<button [routerLink]="['./crear']" class="btn btn-success btn-sm me-1" title="Agregar Usuario">
+					<i class="fa fa-plus"></i> Agregar
+				</button>
+				<button [routerLink]="['./editar', selectedItem?.uuid]" [disabled]="!selectedItem" class="btn btn-warning btn-sm me-1" title="Editar Usuario">
+					<i class="mdi mdi-file-document-edit"></i> Editar Usuario
+				</button>
+				@if (selectedItem && selectedItem.isActive) {
+				<button [disabled]="!selectedItem" class="btn btn-danger btn-sm me-1" title="Eliminar Usuario" (click)="toogleActive(false)">
+					<i class="mdi mdi-lock"></i> Eliminar Usuario
+				</button>
+				}
+				@if (selectedItem && !selectedItem.isActive) {
+				<button [disabled]="!selectedItem" class="btn btn-success btn-sm" title="Activar Usuario" (click)="toogleActive(true)">
+					<i class="mdi mdi-lock-open"></i> Activar Usuario
+				</button>
+				}
+			</div>
+			<div class="col-sm-4 text-end">
+			</div>
+		</div>
+	</section>
+	<p-table [value]="gridData.data" [lazy]="true" (onLazyLoad)="dataStateChange($event)" [(selection)]="selectedItem" dataKey="uuid" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" [paginator]="true" [rows]="state.take" styleClass="p-datatable-gridlines p-datatable-striped" [rowHover]="true" [totalRecords]="gridData.total" selectionMode="single">
+		<ng-template pTemplate="header">
+			<tr>
+				<th style="width: 1rem"></th>
+				<th>Numero de empleado</th>
+				<th>Nombre</th>
+				<th>Email</th>
+				<th>Roles</th>
+				<th>Estatus</th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-row>
+			<tr [pSelectableRow]="row">
+				<td>
+					<p-tableRadioButton [value]="row"></p-tableRadioButton>
+				</td>
+				<td>{{ row.employeeNumber }}</td>
+				<td>{{ row.name }}</td>
+				<td>{{ row.email }}</td>
+				<td>
+					@for (role of row.roles; track role) {
+						<span class="badge bg-gradient-cyan-blue me-1">{{ role | pluck : "name" }}</span>
+					}
+				</td>
+				<td>
+					<span class="badge" [ngClass]="row.isActive ? 'bg-success' : 'bg-danger'" title="Estatus">{{ row.isActive ? "Activo" : "Inactivo" }}</span>
+				</td>
+			</tr>
+		</ng-template>
+	</p-table>
+</app-page-content>

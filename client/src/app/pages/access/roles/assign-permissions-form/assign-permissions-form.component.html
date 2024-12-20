@@ -1,0 +1,37 @@
+<form #form autocomplete="off" (ngSubmit)="save()">
+	<app-modal-content #modal [title]="title">
+		<div class="row">
+			<div class="col-12">
+				<p><a type="button" class="select" (click)="selectAllPermissions(true)">Todos</a> / <a type="button" class="deselected" (click)="selectAllPermissions(false)">Ninguno</a></p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div id="permissions" class="row">
+				@for (group of catGroups; track group) {
+				<div class="col-md-4 mb-4">
+					<strong>{{ group.name }}</strong>
+
+					@for (permission of group.permissions; track permission) {
+					<div class="form-check form-switch">
+						<input type="checkbox" [id]="'chbx-'+permission.key" class="form-check-input" [checked]="permission.checked" (change)="setRolePermissionList($event, permission.key)">
+						<label [for]="'chbx-'+permission.key" class="form-check-label">{{ permission.name }}</label>
+					</div>
+					}
+				</div>
+				}
+
+			</div>
+		</div>
+		<div footer class="w-100 d-flex justify-content-between">
+			<button type="button" class="btn btn-sm btn-white" (click)="modal.close()" tabindex="-1">
+				<i class="fa fa-times"></i>
+				Cerrar
+			</button>
+			<button type="submit" class="btn btn-success btn-sm">
+				<i class="fa fa-check"></i>
+				Guardar
+			</button>
+		</div>
+	</app-modal-content>
+</form>
